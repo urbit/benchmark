@@ -2,6 +2,10 @@
 
 Benchmark code evaluations for comparing Nock evaluation performance.
 
-Benchamrks should be `.nock` files containing cells of `[subject formula]`.
+Benchmarks should include:
 
-- `tiny.nock` is a compiled version of `/lib/tiny` from Hoon 139K.  This forms an appropriate subject for many benchmarks.
+- `.nock` files containing cells of `[subject formula]`
+- `.noun` jamfiles of the Nock code.
+- `.hoon` source files for the Nock code (optional).
+
+We supply `tiny.nock` as a compiled version of `/lib/tiny` from Hoon 139K.  This may form an appropriate subject for some benchmarks.
