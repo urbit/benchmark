@@ -12,6 +12,8 @@ Generally speaking, benchmarks should be self-contained; they should not call ou
 
 ##  Benchmarks
 
+### Supplied
+
 - [Ackermann function](https://en.wikipedia.org/wiki/Ackermann_function), `ackermann`
 - [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes), `sieve`
 - [Naïve decrement](https://moronlab.blogspot.com/2010/01/decrement-in-reck.html), `dec`
@@ -19,11 +21,14 @@ Generally speaking, benchmarks should be self-contained; they should not call ou
 - Operations on direct atoms ($x < 2^{31}$), `atomcat`
 - Operations on indirect atoms ($x > 2^{31}$), `atomdog`
 - Operations on bignums ($x > 2^{63}$), `atomgmp`
-
+- Addressing, `bigslot`
 - [Fibonacci sequence (recursive generating function)](https://en.wikipedia.org/wiki/Fibonacci_sequence#Generating_function), `fibonacci`
-- [Fibonacci sequence (Binet's formula)](https://en.wikipedia.org/wiki/Fibonacci_sequence#Relation_to_the_golden_ratio), `fibformula`
-- Addressing in bignums, `bigslot`
-- [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), `mandelbrot`
+- Factorial (tail-recursive), `factorial`
+
+### Desired
+
+- [Fibonacci sequence (Binet's formula)](https://en.wikipedia.org/wiki/Fibonacci_sequence#Relation_to_the_golden_ratio), `fibformula` (requires FP core)
+- [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), `mandelbrot` (easier with FP core)
 - [Matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication), `mmul`
 - [MD5 hash](https://en.wikipedia.org/wiki/MD5), `md5`
 - [SHA-512 hash](https://en.wikipedia.org/wiki/SHA-2), `sha512`
