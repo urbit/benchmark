@@ -1,18 +1,18 @@
-!.
 =>  [m=@ n=@]
 :-  [3 6]
-!=  !.
+!=
 |^  ^-  @
 ?:  =(0 m)  +(n)
 ?:  =(0 n)  $(m (dec m), n 1)
 $(m (dec m), n $(n (dec n)))
 ::
 ++  dec
-  |=  n=@
-  ^-  @
-  ?:  =(n 0)  !!
-  =+  c=0
+  ::    unsigned decrement by one.
+  |=  a=@
+  ?<  =(0 a)
+  =+  b=0
+  ::  decremented integer
   |-  ^-  @
-  ?:  =(+(c) n)  c
-  $(c +(c))
+  ?:  =(a +(b))  b
+  $(b +(b))
 --
