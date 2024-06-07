@@ -26,7 +26,6 @@ $(n (dec n), t (mul t n))
   ?:  =(a +(b))  b
   $(b +(b))
 ++  mul                                                 ::  multiply
-  ~/  %mul
   |:  [a=`@`1 b=`@`1]
   ^-  @
   =+  c=0
