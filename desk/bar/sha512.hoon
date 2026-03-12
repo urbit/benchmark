@@ -1,47 +1,7 @@
-/+  tiny
-::
-=>  tiny
-::
-::  extend tiny with arms needed for SHA-512
-::
-=>  |%
-    ++  turn
-      |*  [a=(list) b=gate]
-      ?~  a  ~
-      [i=(b i.a) t=$(a t.a)]
-    ::
-    ++  run                                             ::  +turn into atom
-      |=  [a=bite b=@ c=$-(@ @)]
-      (rep a (turn (rip a b) c))
-    ::
-    ++  fe                                              ::  modulo bloq
-      |_  a=bloq
-      ++  inv  |=(b=@ (sub (dec (bex (bex a))) (sit b)))
-      ++  net  |=  b=@  ^-  @                           ::  flip byte endianness
-               =>  .(b (sit b))
-               ?:  (lte a 3)  b
-               =+  c=(dec a)
-               %+  con
-                 (lsh c $(a c, b (cut c [0 1] b)))
-               $(a c, b (cut c [1 1] b))
-      ++  rol  |=  [b=bloq c=@ d=@]  ^-  @              ::  roll left
-               =+  e=(sit d)
-               =+  f=(bex (sub a b))
-               =+  g=(mod c f)
-               (sit (con (lsh [b g] e) (rsh [b (sub f g)] e)))
-      ++  ror  |=  [b=bloq c=@ d=@]  ^-  @              ::  roll right
-               =+  e=(sit d)
-               =+  f=(bex (sub a b))
-               =+  g=(mod c f)
-               (sit (con (rsh [b g] e) (lsh [b (sub f g)] e)))
-      ++  sum  |=([b=@ c=@] (sit (add b c)))
-      ++  sit  |=(b=@ (end a b))
-      --
-    --
-::
-:-  .
+=>  m=@
+:-  0
 !=
-^-  @
+|^  ^-  @
 ::  SHA-512 of 'abc' (3 bytes)
 ::  expected: 0xddaf.35a1.9361.7aba.cc41.7349.ae20.4131.
 ::              12e6.fa4e.89a9.7ea2.0a9e.eee6.4b55.d39a.
@@ -159,3 +119,176 @@
 =+  p=(mix (dis e f) (dis (inv e) g))                 ::  ch
 =+  q=:(sum h o p (wac j kbx) (wac j wox))            ::  t1
 $(j +(j), a (sum q n), b a, c b, d c, e (sum d q), f e, g f, h g)
+::
+++  dec
+  |=  a=@
+  ?<  =(0 a)
+  =+  b=0
+  |-  ^-  @
+  ?:  =(a +(b))  b
+  $(b +(b))
+::
+++  add
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 a)  b
+  $(a (dec a), b +(b))
+::
+++  sub
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 b)  a
+  $(a (dec a), b (dec b))
+::
+++  mul
+  |=  [a=@ b=@]
+  ^-  @
+  =+  c=0
+  |-
+  ?:  =(0 a)  c
+  $(a (dec a), c (add b c))
+::
+++  div
+  |=  [a=@ b=@]
+  ^-  @
+  ?<  =(0 b)
+  =+  c=0
+  |-
+  ?:  (lth a b)  c
+  $(a (sub a b), c +(c))
+::
+++  mod
+  |=  [a=@ b=@]
+  ^-  @
+  ?<  =(0 b)
+  (sub a (mul b (div a b)))
+::
+++  bex
+  |=  a=@
+  ^-  @
+  ?:  =(0 a)  1
+  (mul 2 $(a (dec a)))
+::
+++  lth
+  |=  [a=@ b=@]
+  ^-  ?
+  ?&  !=(a b)
+      |-
+      ?:  =(0 a)  &
+      ?:  =(0 b)  |
+      $(a (dec a), b (dec b))
+  ==
+::
+++  lte
+  |=  [a=@ b=@]
+  ^-  ?
+  |(=(a b) (lth a b))
+::
+++  lsh
+  |=  [a=$@(@ [@ @]) b=@]
+  =/  [bl=@ s=@]  ?^(a a [a 1])
+  (mul b (bex (mul (bex bl) s)))
+::
+++  rsh
+  |=  [a=$@(@ [@ @]) b=@]
+  =/  [bl=@ s=@]  ?^(a a [a 1])
+  (div b (bex (mul (bex bl) s)))
+::
+++  con
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 a)  b
+  ?:  =(0 b)  a
+  =+  c=?|(!=(0 (mod a 2)) !=(0 (mod b 2)))
+  (add ?:(c 1 0) (mul 2 $(a (div a 2), b (div b 2))))
+::
+++  dis
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 a)  0
+  ?:  =(0 b)  0
+  =+  c=?&(!=(0 (mod a 2)) !=(0 (mod b 2)))
+  (add ?:(c 1 0) (mul 2 $(a (div a 2), b (div b 2))))
+::
+++  mix
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 a)  b
+  ?:  =(0 b)  a
+  %+  add
+    (mod (add (mod a 2) (mod b 2)) 2)
+  (mul 2 $(a (div a 2), b (div b 2)))
+::
+++  met
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 b)  0
+  =+  c=(bex (bex a))
+  |-  ^-  @
+  ?:  (lth b c)  1
+  +($(b (div b c)))
+::
+++  end
+  |=  [a=$@(@ [@ @]) b=@]
+  =/  [bl=@ s=@]  ?^(a a [a 1])
+  (mod b (bex (mul (bex bl) s)))
+::
+++  cut
+  |=  [a=@ [b=@ c=@] d=@]
+  (end [a c] (rsh [a b] d))
+::
+++  can
+  |=  [a=@ b=*]
+  ^-  @
+  ?~  b  0
+  (add (end [a `@`-.-.b] `@`+.-.b) (lsh [a `@`-.-.b] $(b +.b)))
+::
+++  rep
+  |=  [a=$@(@ [@ @]) b=*]
+  =/  [bl=@ s=@]  ?^(a a [a 1])
+  =|  i=@
+  |-  ^-  @
+  ?~  b  0
+  %+  add  $(i +(i), b +.b)
+  (lsh [bl (mul s i)] (end [bl s] `@`-.b))
+::
+++  rip
+  |=  [a=$@(@ [@ @]) b=@]
+  ^-  *
+  ?:  =(0 b)  ~
+  [(end a b) $(b (rsh a b))]
+::
+++  turn
+  |=  [a=* b=$-(* *)]
+  ^-  *
+  ?~  a  ~
+  [(b -.a) $(a +.a)]
+::
+++  run                                                 ::  +turn into atom
+  |=  [a=$@(@ [@ @]) b=@ c=$-(@ @)]
+  (rep a (turn (rip a b) c))
+::
+++  fe                                                  ::  modulo bloq
+  |_  a=@
+  ++  inv  |=(b=@ (sub (dec (bex (bex a))) (sit b)))
+  ++  net  |=  b=@  ^-  @
+           =>  .(b (sit b))
+           ?:  (lte a 3)  b
+           =+  c=(dec a)
+           %+  con
+             (lsh c $(a c, b (cut c [0 1] b)))
+           $(a c, b (cut c [1 1] b))
+  ++  rol  |=  [b=@ c=@ d=@]  ^-  @
+           =+  e=(sit d)
+           =+  f=(bex (sub a b))
+           =+  g=(mod c f)
+           (sit (con (lsh [b g] e) (rsh [b (sub f g)] e)))
+  ++  ror  |=  [b=@ c=@ d=@]  ^-  @
+           =+  e=(sit d)
+           =+  f=(bex (sub a b))
+           =+  g=(mod c f)
+           (sit (con (rsh [b g] e) (lsh [b (sub f g)] e)))
+  ++  sum  |=([b=@ c=@] (sit (add b c)))
+  ++  sit  |=(b=@ (end a b))
+  --
+--

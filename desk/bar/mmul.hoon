@@ -1,19 +1,9 @@
-/+  tiny
-::
-=>  tiny
-::
-=>  |%
-    ++  turn
-      |*  [a=(list) b=gate]
-      ?~  a  ~
-      [i=(b i.a) t=$(a t.a)]
-    --
-::
-:-  .
+=>  size=@
+:-  10
 !=
-%.  10
+%.  size
 |=  size=@
-^-  (list (list @))
+^-  *
 ::  multiply two procedurally generated size x size matrices.
 ::  a[i][j] = i*size + j + 1 (1-indexed sequential)
 ::  b[i][j] = size*size - (i*size + j) (reverse sequential)
@@ -24,53 +14,82 @@
 (mmul a b)
 ::
 ++  mmul
-  |=  [a=(list (list @)) b=(list (list @))]
-  ^-  (list (list @))
+  |=  [a=* b=*]
+  ^-  *
   =+  bt=(trn b)
-  %+  turn  a
-  |=  row=(list @)
-  ^-  (list @)
-  %+  turn  bt
-  |=  col=(list @)
-  ^-  @
-  (dot row col)
+  (turn a |=(row=* (turn bt |=(col=* (dot row col)))))
 ::
 ++  gen
   |=  [n=@ f=$-([@ @] @)]
-  ^-  (list (list @))
+  ^-  *
   =+  i=0
   |-
   ?:  =(i n)  ~
   :_  $(i +(i))
   =+  j=0
-  |-  ^-  (list @)
+  |-  ^-  *
   ?:  =(j n)  ~
   :_  $(j +(j))
   (f [i j])
 ::
+++  turn
+  |=  [a=* b=$-(* *)]
+  ^-  *
+  ?~  a  ~
+  [(b -.a) $(a +.a)]
+::
 ++  trn
-  |=  m=(list (list @))
-  ^-  (list (list @))
+  |=  m=*
+  ^-  *
   ?~  m  ~
-  ?~  i.m  ~
+  ?~  -.m  ~
   [(heads m) $(m (tails m))]
 ::
 ++  heads
-  |=  m=(list (list @))
-  ^-  (list @)
+  |=  m=*
+  ^-  *
   ?~  m  ~
-  [?~(i.m 0 i.i.m) $(m t.m)]
+  [-.-.m $(m +.m)]
 ::
 ++  tails
-  |=  m=(list (list @))
-  ^-  (list (list @))
+  |=  m=*
+  ^-  *
   ?~  m  ~
-  [?~(i.m ~ t.i.m) $(m t.m)]
+  [?~(-.m ~ +.-.m) $(m +.m)]
 ::
 ++  dot
-  |=  [a=(list @) b=(list @)]
+  |=  [a=* b=*]
   ^-  @
   ?~  a  0
   ?~  b  0
-  (add (mul i.a i.b) $(a t.a, b t.b))
+  %+  add  (mul `@`-.a `@`-.b)
+  $(a +.a, b +.b)
+::
+++  dec
+  |=  a=@
+  ?<  =(0 a)
+  =+  b=0
+  |-  ^-  @
+  ?:  =(a +(b))  b
+  $(b +(b))
+::
+++  add
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 a)  b
+  $(a (dec a), b +(b))
+::
+++  sub
+  |=  [a=@ b=@]
+  ^-  @
+  ?:  =(0 b)  a
+  $(a (dec a), b (dec b))
+::
+++  mul
+  |=  [a=@ b=@]
+  ^-  @
+  =+  c=0
+  |-
+  ?:  =(0 a)  c
+  $(a (dec a), c (add b c))
 --
