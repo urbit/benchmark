@@ -1,0 +1,31 @@
+name: Regenerate Nock reference table
+
+on:
+  push:
+    paths:
+      - 'norm/tests.json'
+      - 'norm/generate.py'
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Regenerate REFERENCE.md
+        run: python3 norm/generate.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add norm/REFERENCE.md
+          git diff --cached --quiet || git commit -m "norm: regenerate REFERENCE.md"
+          git push
