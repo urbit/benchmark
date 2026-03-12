@@ -1,0 +1,91 @@
+[
+  {
+    "name": "ackermann",
+    "description": "Ackermann function ack(3,6)",
+    "subject": "[3 6]",
+    "default_subject": "[3 6]",
+    "result": "509"
+  },
+  {
+    "name": "add",
+    "description": "Naive addition 1000 + 2000",
+    "subject": "[1.000 2.000]",
+    "default_subject": "[1.000 2.000]",
+    "result": "3.000"
+  },
+  {
+    "name": "dec",
+    "description": "Naive decrement of 100",
+    "subject": "100",
+    "default_subject": "1.000.000",
+    "result": "99"
+  },
+  {
+    "name": "factorial",
+    "description": "Factorial of 5 (tail-recursive)",
+    "subject": "5",
+    "default_subject": "40",
+    "result": "120"
+  },
+  {
+    "name": "fibonacci",
+    "description": "Fibonacci of 10 (naive recursive)",
+    "subject": "10",
+    "default_subject": "10",
+    "result": "55"
+  },
+  {
+    "name": "bigslot",
+    "description": "Deep tree addressing: axis 100 of list of 100 nulls",
+    "subject": "0",
+    "default_subject": "0",
+    "result": "0"
+  },
+  {
+    "name": "atomcat",
+    "description": "Arithmetic on 16-bit atoms (add, sub, mul, div, mod)",
+    "subject": "0",
+    "default_subject": "0",
+    "result": "[98.303 32.767 2.147.450.880 1 32.767]",
+    "note": "Hardcoded inputs: m=2^16-1, n=2^15. Result computed via stdlib."
+  },
+  {
+    "name": "atomdog",
+    "description": "Arithmetic on 32-bit atoms (add, sub, mul, div, mod)",
+    "subject": "0",
+    "default_subject": "0",
+    "result": "[6.442.450.943 2.147.483.647 9.223.372.034.707.292.160 1 2.147.483.647]",
+    "note": "Hardcoded inputs: m=2^32-1, n=2^31. Result computed via stdlib."
+  },
+  {
+    "name": "atomgmp",
+    "description": "Arithmetic on 128-bit atoms (add, sub, mul, div, mod)",
+    "subject": "0",
+    "default_subject": "0",
+    "result": "[ 510.423.550.381.407.695.195.061.911.147.652.317.183 170.141.183.460.469.231.731.687.303.715.884.105.727 57.896.044.618.658.097.711.785.492.504.343.953.926.464.851.149.359.812.787.997.104.700.240.680.714.240 1 170.141.183.460.469.231.731.687.303.715.884.105.727 ]",
+    "note": "Hardcoded inputs: m=2^128-1, n=2^127. Result computed via stdlib."
+  },
+  {
+    "name": "mmul",
+    "description": "3x3 matrix multiplication",
+    "subject": "3",
+    "default_subject": "10",
+    "result": "[[30 24 18 0] [84 69 54 0] [138 114 90 0] 0]"
+  },
+  {
+    "name": "sha512",
+    "description": "SHA-512 hash of 'abc' (3 bytes)",
+    "subject": "0",
+    "default_subject": "0",
+    "result": "11.610.554.759.577.678.887.058.616.627.522.426.787.358.414.133.166.247.019.097.754.655.123.425.531.747.192.578.669.846.860.198.531.688.061.507.751.898.313.498.051.436.198.428.987.376.028.989.280.584.770.719",
+    "note": "Known test vector: SHA-512('abc'). Result computed from spec."
+  },
+  {
+    "name": "sieve",
+    "description": "Sieve of Eratosthenes up to 30",
+    "subject": "30",
+    "default_subject": "100.000",
+    "result": "1.601.558.355",
+    "note": "Result computed via stdlib; too slow in pure Nock."
+  }
+]

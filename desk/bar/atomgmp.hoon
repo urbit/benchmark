@@ -2,7 +2,7 @@
 :-  0
 !=
 |^  ^-  ^
-=+  [m=(dec (bex 128)) n=(bex 128)]
+=+  [m=(dec (bex 128)) n=(bex 127)]
 :*  (add m n)
     (sub m n)
     (mul m n)
