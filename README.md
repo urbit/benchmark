@@ -25,13 +25,14 @@ Generally speaking, benchmarks should be self-contained; they should not call ou
 - [Fibonacci sequence (recursive generating function)](https://en.wikipedia.org/wiki/Fibonacci_sequence#Generating_function), `fibonacci`
 - Factorial (tail-recursive), `factorial`
 
+- [Matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication), `mmul`
+- [SHA-512 hash](https://en.wikipedia.org/wiki/SHA-2), `sha512`
+
 ### Desired
 
 - [Fibonacci sequence (Binet's formula)](https://en.wikipedia.org/wiki/Fibonacci_sequence#Relation_to_the_golden_ratio), `fibformula` (requires FP core)
 - [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set), `mandelbrot` (easier with FP core)
-- [Matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication), `mmul`
 - [MD5 hash](https://en.wikipedia.org/wiki/MD5), `md5`
-- [SHA-512 hash](https://en.wikipedia.org/wiki/SHA-2), `sha512`
 
 ##  Reporting
 
