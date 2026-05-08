@@ -28,6 +28,7 @@ All benchmarks are self-contained; they do not call out to additional libraries 
 
 - [Matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication), `mmul`
 - [SHA-512 hash](https://en.wikipedia.org/wiki/SHA-2), `sha512`
+- Bootstrap hoon.hoon kelvin 135 from Nock, `hoon-135`
 
 ### Desired
 

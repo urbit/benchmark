@@ -81,6 +81,13 @@
     "note": "Known test vector: SHA-512('abc'). Result computed from spec."
   },
   {
+    "name": "hoon-135",
+    "description": "Bootstrap hoon.hoon kelvin 135 from Nock (self-contained)",
+    "subject": "0",
+    "default_subject": "0",
+    "result": ""
+  },
+  {
     "name": "sieve",
     "description": "Sieve of Eratosthenes up to 30",
     "subject": "30",
