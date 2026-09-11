@@ -87,5 +87,23 @@
     "default_subject": "100.000",
     "result": "1.601.558.355",
     "note": "Result computed via stdlib; too slow in pure Nock."
+  },
+  {
+    "name": "hoon",
+    "description": "Compile /sys/hoon.hoon (Hoon %135, 437 KB) with the Hoon compiler",
+    "subject": "[compiler /bar/src/hoon-135.hoon]",
+    "default_subject": "[compiler /bar/src/hoon-135.hoon]",
+    "result_mug": "538.422.470",
+    "noun_mug": "1.575.878.842",
+    "note": "Subject is the Hoon compiler core (in which +ride is defined) paired with the source text; the product is a [type nock] pair. Both are far too large to inline, so result_mug is the +mug of the product and noun_mug the +mug of the whole [subject formula] cell. Compiler is Hoon %135, from Vere 4.3's ivory pill. See README, Compiler benchmarks."
+  },
+  {
+    "name": "prelude",
+    "description": "Compile the abbreviated Nockchain Hoon prelude (Hoon %138, 416 KB) with the Hoon compiler",
+    "subject": "[compiler /bar/src/hoon-138.hoon]",
+    "default_subject": "[compiler /bar/src/hoon-138.hoon]",
+    "result_mug": "2.055.478.196",
+    "noun_mug": "992.149.750",
+    "note": "Subject is the Hoon compiler core (in which +ride is defined) paired with the source text; the product is a [type nock] pair. Both are far too large to inline, so result_mug is the +mug of the product and noun_mug the +mug of the whole [subject formula] cell. Compiler is Hoon %135, from Vere 4.3's ivory pill. See README, Compiler benchmarks."
   }
 ]

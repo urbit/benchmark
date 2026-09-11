@@ -7,6 +7,7 @@
 |_  non=*
 ++  grab  |%
           ++  noun  *
+          ++  mime  |=([p=mite q=octs] (cue q.q))
           --
 ++  grow  |%
           ++  mime  [/application/x-urb-jam (as-octs:mimes:html (jam non))]
